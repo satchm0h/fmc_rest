@@ -54,10 +54,10 @@ def init():
     # Load from env or file if not provided on the command line
     if options.token is None:
         if 'CDO_TOKEN' in os.environ:
-            logging.debug('Loading hostname from environment')
+            logging.debug('Loading token from environment')
             options.token = os.environ.get('FMC_HOSTNAME')
         elif os.path.isfile(os.path.expanduser(CDO_TOKEN_FILE)):
-            logging.debug('Loading hostname from file')
+            logging.debug('Loading token from file')
             with open(os.path.expanduser(CDO_TOKEN_FILE), 'r') as fh:
                 options.token = fh.read().strip()
         else:
