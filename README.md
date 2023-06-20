@@ -4,7 +4,7 @@ Simple Python 3 REST driver for Cisco Secure Firewall Management Center (FMC) an
 
 ## Installation
 
-- Check out this repo: `git clone 
+- Check out this repo: `git clone git@github.com:satchm0h/fmc_rest.git`
 - `cd` into the `fmc_rest` directory
 - Run `pip3 install .`
   - or `pip3 install -e .` if you want to do module development in place in your clone
