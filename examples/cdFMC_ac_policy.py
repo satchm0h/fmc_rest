@@ -55,7 +55,7 @@ def init():
     if options.token is None:
         if 'CDO_TOKEN' in os.environ:
             logging.debug('Loading token from environment')
-            options.token = os.environ.get({CDO_TOKEN_EV})
+            options.token = os.environ.get(CDO_TOKEN_EV)
         elif os.path.isfile(os.path.expanduser(CDO_TOKEN_FILE)):
             logging.debug('Loading token from file')
             with open(os.path.expanduser(CDO_TOKEN_FILE), 'r') as fh:
