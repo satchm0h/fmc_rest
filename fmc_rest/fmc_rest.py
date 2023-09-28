@@ -7,6 +7,7 @@ import json
 import requests
 import logging
 from time import time as now
+from time import sleep
 
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -84,6 +85,9 @@ class FMCRest(object):
                 logging.debug("Login Authentication")
                 resp = self.session.post(self.base_url + FMCRest.AUTH_PATH,
                                          auth=requests.auth.HTTPBasicAuth(username, password))
+                if resp.status_code >= 300 and resp.status_code < 200:
+                    logging.error('Authentication Failed')
+                    resp.raise_for_status()
 
                 # Grab the provided domain uuid out of the header.
                 self.domain_list = json.loads(resp.headers.get('DOMAINS', default='[]'))
@@ -137,31 +141,36 @@ class FMCRest(object):
         """
 
         try:
-            # See if we need to refresh
-            self._auth()
 
-            # Do the needful based on the HTTP verb
-            if verb.lower() == "get":
-                resp = self.session.get(self.base_url + url)
-            elif verb.lower() == "delete":
-                resp = self.session.delete(self.base_url + url)
-            elif verb.lower() == "put":
-                resp = self.session.put(self.base_url + url, data=json.dumps(req_data))
-            elif verb.lower() == "post":
-                resp = self.session.post(self.base_url + url, data=json.dumps(req_data))
-            else:
-                raise FMCException(f"Invalid verb '{verb}' passed to request")
+            while True:
+                # See if we need to refresh
+                self._auth()
 
-            status_code = resp.status_code
-            payload = resp.text
+                # Do the needful based on the HTTP verb
+                if verb.lower() == "get":
+                    resp = self.session.get(self.base_url + url)
+                elif verb.lower() == "delete":
+                    resp = self.session.delete(self.base_url + url)
+                elif verb.lower() == "put":
+                    resp = self.session.put(self.base_url + url, data=json.dumps(req_data))
+                elif verb.lower() == "post":
+                    resp = self.session.post(self.base_url + url, data=json.dumps(req_data))
+                else:
+                    raise FMCException(f"Invalid verb '{verb}' passed to request")
 
-            # Happy case
-            if status_code < 300 and status_code >= 200:
-                return json.loads(payload)
+                status_code = resp.status_code
+                payload = resp.text
 
-            # HTTP Error encountered.
-            else:
-                resp.raise_for_status()
+                # Happy case
+                if status_code < 300 and status_code >= 200:
+                    return json.loads(payload)
+                # Rate limit handling
+                elif status_code == 429:
+                    logging.warn(f"Rate Limit hit : 60 sec backoff triggered")
+                    sleep(60)
+                # HTTP Error encountered.
+                else:
+                    resp.raise_for_status()
 
         # Log and pass through HTTP exceptions to be handled outside the library.
         except requests.exceptions.HTTPError as err:
