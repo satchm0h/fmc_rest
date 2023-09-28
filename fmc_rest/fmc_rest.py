@@ -3,7 +3,6 @@ Utility module for connecting to and interacting with
 FMC REST API
 """
 
-import sys
 import json
 import requests
 import logging
@@ -162,7 +161,6 @@ class FMCRest(object):
 
             # HTTP Error encountered.
             else:
-                logging.error(f"Error occurred in {verb.upper()} --> {payload}")
                 resp.raise_for_status()
 
         # Log and pass through HTTP exceptions to be handled outside the library.
