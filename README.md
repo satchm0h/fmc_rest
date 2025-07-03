@@ -82,3 +82,8 @@ Usage:
     -t --token TOKEN    CDO API token (Please use ~/.cdo_token file or CDO_TOKEN env var instead)
     -r --region REGION  CDO Region. Must be one of: "us", "eu", or "apj" Default: us
     -b, --bulk          Process all the Access Policies on the FMC at once
+## Running Tests
+
+Install test requirements and run:
+
+    pytest
