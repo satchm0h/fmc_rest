@@ -24,7 +24,7 @@ class FMCException(Exception):
 
 
 class FMCRest(object):
-    """FMC Reset API utility class
+    """FMC REST API utility class
     """
 
     AUTH_PATH = "fmc_platform/v1/auth/generatetoken"
@@ -178,7 +178,7 @@ class FMCRest(object):
             raise err
 
 class cdFMCRest(FMCRest):
-    """cdFMC Reset API utility class
+    """cdFMC REST API utility class
     """
 
     CDFMC_HOST_ENDPOINT= 'aegis/rest/v1/services/targets/devices?q=deviceType:FMCE'
