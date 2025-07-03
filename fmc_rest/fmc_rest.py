@@ -32,7 +32,7 @@ class FMCRest(object):
     HEADERS = {'Content-Type': 'application/json'}
 
     def __init__(self, server, username, password, ssl_verify=False, url='/api/', domain='Global'):
-        """ Construtor
+        """ Constructor
         :param server: Hostname or IP of FMC
         :param username: Username of user to authenticate to the FMC
         :param password: Password of use to authenticate to the FMC
@@ -189,7 +189,7 @@ class cdFMCRest(FMCRest):
     }
 
     def __init__(self, token, region, ssl_verify=True, url='/api/', domain='Global'):
-        """ Construtor
+        """ Constructor
         :param server: Hostname or IP of FMC
         :param api_key: CDO API key from User Management UI
         :param ssl_verify: Enable SSL verification. Note this does not work for self-signed certs.
