@@ -27,6 +27,7 @@ def _install_requests_stub(monkeypatch):
 
 
 def test_star_import_provides_symbols(monkeypatch):
+    """Ensure __all__ exports primary classes on star import."""
     _install_requests_stub(monkeypatch)
     namespace = {}
     exec('from fmc_rest import *', namespace)
@@ -36,6 +37,7 @@ def test_star_import_provides_symbols(monkeypatch):
 
 
 def test_request_invalid_verb_raises(monkeypatch):
+    """_request should reject HTTP verbs it does not implement."""
     _install_requests_stub(monkeypatch)
     from fmc_rest import FMCRest, FMCException
 
