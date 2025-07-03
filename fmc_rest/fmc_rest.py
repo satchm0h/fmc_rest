@@ -13,7 +13,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # Explicitly export symbols
-__all__ = ['FMCRest', 'cdFMCRest' 'FMCException']
+__all__ = ['FMCRest', 'cdFMCRest', 'FMCException']
 
 class FMCException(Exception):
     """ Utility exception for Module specific errors
