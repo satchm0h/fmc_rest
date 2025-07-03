@@ -85,6 +85,10 @@ Usage:
 
 ## Running Tests
 
-Install test requirements and run:
+Install test requirements and run the suite with coverage enabled:
 
-    pytest
+    pip install pytest coverage
+
+    python -m coverage run -m pytest
+    python -m coverage xml
+    python -m coverage report
