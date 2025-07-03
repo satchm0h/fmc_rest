@@ -85,7 +85,7 @@ class FMCRest(object):
                 logging.debug("Login Authentication")
                 resp = self.session.post(self.base_url + FMCRest.AUTH_PATH,
                                          auth=requests.auth.HTTPBasicAuth(username, password))
-                if resp.status_code >= 300 and resp.status_code < 200:
+                if not 200 <= resp.status_code < 300:
                     logging.error('Authentication Failed')
                     resp.raise_for_status()
 
